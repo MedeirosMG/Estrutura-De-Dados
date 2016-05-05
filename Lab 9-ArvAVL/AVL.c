@@ -211,8 +211,11 @@ int remover(Arvore* arv, int chave) {
            if(rp->pai)
               rp->pai->esquerdo = rp->direito;
 
+            if(rp->direito)
+            {
                 rp->direito = remover->direito;
                 rp->direito->pai = rp;
+            }
             
         }
         
@@ -409,12 +412,15 @@ int main(int argc, char *argv[]) {
     insere(&a, 15);
     print_t(a.raiz);
     puts("REMOCAO");
+    remover(&a, 5);
+    print_t(a.raiz);
     remover(&a, 17);
     print_t(a.raiz);
     remover(&a, 8);
     print_t(a.raiz);
     remover(&a, 15);
     print_t(a.raiz);    
+
 
     puts("FIM DOS TESTES");
     /*
