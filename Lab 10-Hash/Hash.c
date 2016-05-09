@@ -262,12 +262,16 @@ int main(int argc, char* argv[])
 		printf("2 - Inserir numeros\n");
 		printf("3 - Remover numero\n");
 		printf("4 - Verificar se numero existe\n");
-		printf("6 - Destroi hash\n\n");
+		printf("6 - Destroi hash\n");
+		printf("0 - Sair\n\n");
 
 		scanf("%d", &x);
 
 		switch(x) 
 		{
+			case 0:
+				break;
+				
 			case 1:
 				printf("\n");
 				printf("Digite o tamanho da hash: ");
@@ -335,7 +339,7 @@ int main(int argc, char* argv[])
 				}
 				else 
 				{
-					printf("Esse numero nao existe\n");
+					printf("\nEsse numero nao existe\n\n");
 				}
 
 				system(PAUSE); 
