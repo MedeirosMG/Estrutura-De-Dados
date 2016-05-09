@@ -161,6 +161,7 @@ No* busca(No* folha, int chave) {  // Passar a primeira folha ao invez da arvore
 int remover(Arvore* arv, int chave) {
 
    No* remover = busca(arv->raiz, chave);
+   int aux;
 
     if (!remover)
         return 0;
@@ -168,7 +169,8 @@ int remover(Arvore* arv, int chave) {
     No* rp=NULL;
 
     //Caso 1: remover n�o tem filhos
-    if (remover->esquerdo == NULL && remover->direito == NULL) {
+    if (remover->esquerdo == NULL && remover->direito == NULL) 
+    {
         if(remover->pai){
             if (chave < remover->pai->chave) {
                 remover->pai->esquerdo = NULL;
@@ -176,14 +178,22 @@ int remover(Arvore* arv, int chave) {
                 remover->pai->direito = NULL;
             }
        }
+       Balanceie(arv, remover->pai);
     }//CASO 2: remover tem apenas 1 filho
     else if ((remover->esquerdo != NULL || remover->direito != NULL)
-            && !(remover->esquerdo != NULL && remover->direito != NULL)) {
+            && !(remover->esquerdo != NULL && remover->direito != NULL)) 
+    {
 
         if (remover->esquerdo != NULL)
+        {
             rp = remover->esquerdo;
+            aux = 1;
+        }
         else
+        {
             rp = remover->direito;
+            aux = 2;
+        }
 
         if(remover->pai){
              if (chave < remover->pai->chave) {
@@ -193,8 +203,10 @@ int remover(Arvore* arv, int chave) {
              }
         }
         rp->pai = remover->pai;
+        Balanceie(arv, rp);
     }//CASO 3: remover tem os dois filhos
-    else {
+    else 
+    {
         rp = remover->direito;
         while (rp->esquerdo) {
             rp = rp->esquerdo;
@@ -223,9 +235,10 @@ int remover(Arvore* arv, int chave) {
         if(remover->pai){
                 if (chave < remover->pai->chave)
                     remover->pai->esquerdo = rp;
-                            else
+                else
                     remover->pai->direito = rp;
         }
+        Balanceie(arv, rp->direito);
     }
 
     //No removido era a raiz
@@ -233,7 +246,7 @@ int remover(Arvore* arv, int chave) {
         arv->raiz = rp;
     }
 
-    Balanceie(arv, remover);
+    
     free(remover);
     return 1;
 
@@ -344,13 +357,14 @@ void rightRotate(Arvore* arv, No* folha)
 void Balanceie(Arvore* arv, No* folha)
 {  
     No* balance = folha;
-    int aux = FatorBalanc(balance);
+    int aux = 0;
 
-    while(aux > -2 && aux< 2 && balance->pai != NULL)
+    do
     {
+        aux = FatorBalanc(balance->pai);
         balance = balance->pai;
-        aux = FatorBalanc(balance);
-    }
+        
+    }while(aux > -2 && aux< 2 && balance->pai != NULL);
 
     int pai = FatorBalanc(balance);
     int filhoDir = FatorBalanc(balance->direito);
@@ -393,33 +407,31 @@ int main(int argc, char *argv[]) {
     */
 
     puts("SEQUENCIA DE TESTES");
-    insere(&a, 5);
-    print_t(a.raiz);
-    insere(&a, 8);
-    print_t(a.raiz);
-    insere(&a, 6);
-    print_t(a.raiz);
-    insere(&a, 20);
-    print_t(a.raiz);
-    insere(&a, 21);
-    print_t(a.raiz);
-    insere(&a, 19);
-    print_t(a.raiz);
-    insere(&a, 17);
-    print_t(a.raiz);
-    insere(&a, 18);
-    print_t(a.raiz);
-    insere(&a, 15);
-    print_t(a.raiz);
-    puts("REMOCAO");
-    remover(&a, 5);
-    print_t(a.raiz);
-    remover(&a, 17);
-    print_t(a.raiz);
-    remover(&a, 8);
-    print_t(a.raiz);
-    remover(&a, 15);
-    print_t(a.raiz);    
+        insere(&a, 5);
+        print_t(a.raiz);
+        insere(&a, 8);
+        print_t(a.raiz);
+        insere(&a, 6);
+        print_t(a.raiz);
+        insere(&a, 20);
+        print_t(a.raiz);
+        insere(&a, 21);
+        print_t(a.raiz);
+        insere(&a, 19);
+        print_t(a.raiz);
+        insere(&a, 17);
+        print_t(a.raiz);
+        insere(&a, 18);
+        print_t(a.raiz);
+        insere(&a, 15);
+        print_t(a.raiz);
+        puts("REMOCAO");
+        remover(&a, 5);
+        print_t(a.raiz);
+        remover(&a, 17);
+        print_t(a.raiz);
+        remover(&a, 15);
+        print_t(a.raiz);
 
 
     puts("FIM DOS TESTES");

@@ -20,6 +20,13 @@ typedef struct
     no* primeiro;
 }LDE;
 
+typedef struct 
+{ 
+    int tamanho; 
+    int quantidade; 
+    LDE* table[tamanho]; 
+}tHashTable; 
+
 no* busca(LDE* l, tHashItem* chave) 
 {
 	no* ptrAnt = NULL;
@@ -121,6 +128,11 @@ void removerTudo(LDE* l)
 	}
 	l->primeiro = ptrAtual;
 	
+}
+
+int funcaoHash(int chave, int tamanho)
+{
+	return (chave % tamanho);
 }
 
 int main(int argc, char* argv[]) 
